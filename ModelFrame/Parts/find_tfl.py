@@ -23,6 +23,7 @@ except ImportError:
     print("Need to fix the installation")
     raise
 
+
 class Find_TFL:
     def __init__(self):
         self.kernel = Attention.build_kernel()
@@ -37,7 +38,8 @@ class Find_TFL:
 
     def get_distance(self, red_point, green_point):
         return math.dist([red_point[0], red_point[1]], [green_point[0], green_point[1]])
-    def run(self,path_image):
+
+    def run(self, path_image):
         kernel = self.kernel
         red_tuple, green_tuple = self.__find_tfl_test(path_image, kernel)
         return red_tuple, green_tuple
