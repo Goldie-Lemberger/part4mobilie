@@ -21,8 +21,8 @@ class View:
         '''part 2'''
         tfl_sec.set_title('Traffic light candidates')
         tfl_sec.imshow(plt.imread(path))
-        tfl_sec.plot(red_TFLs[:, 0], red_TFLs[:, 1], 'ro', color='r', markersize=4)
-        tfl_sec.plot(green_TFLs[:, 0], green_TFLs[:, 1], 'ro', color='g', markersize=4)
+        tfl_sec.plot(red_TFLs[:, 0], red_TFLs[:, 1], 'ro', markersize=4)
+        tfl_sec.plot(green_TFLs[:, 0], green_TFLs[:, 1], 'ro',  markersize=4)
 
         '''part 3'''
         distance_sec.set_title('tfl distances')

@@ -21,7 +21,7 @@ class TFl_manager:
         self.pp = pp
 
     def get_model(self):
-        loaded_model = load_model("C:\\Users\\User\\Documents\\remote learning\\BootCamp\\Projects\\Mobileye\\part4mobilie\\ModelFrame\\model.h5")
+        loaded_model = load_model('ModelFrame/model.h5')
         return loaded_model
 
 

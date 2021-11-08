@@ -28,7 +28,7 @@ def build_kernel():
      It will be looking for a circle shaped object with a strong contrast frame
      :return Kernel: 2D array with sum 0
      """
-    circle_img = Image.open("light.png").convert('L')
+    circle_img = Image.open('Controller/light.png').convert('L')
     kernel = np.asarray(circle_img)
     kernel = kernel.astype(np.float32)
     kernel -= 100

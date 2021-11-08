@@ -24,16 +24,16 @@ class Controller:
         return data
 
     def get_paths(self):
-        pkl = ""
+        pkl = ''
         frame_list = []
         with open(self.pls_path, "r") as pls_file:
             paths_list = pls_file.readlines()
             for path in paths_list:
-                path = path.strip('\n')
+                path =path.strip('\n')
                 if path.endswith('pkl'):
-                    pkl = path
+                    pkl =  'Controller/'+path
                 elif path.endswith('png'):
-                    frame_list.append(path)
+                    frame_list.append( 'Controller/'+path)
                 else:
                     index = int(path)
         return pkl, index,frame_list
