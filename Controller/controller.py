@@ -3,6 +3,7 @@ import pickle
 
 import numpy as np
 
+from ModelFrame import SFM
 from ModelFrame.TFL_manager import TFl_manager
 from View.view import View
 
@@ -11,11 +12,11 @@ class Controller:
 
     def __init__(self, pls_path):
         self.pls_path = pls_path
-        self.pkl,self.index, self.frame_list = self.get_paths()
+        self.pkl, self.index, self.frame_list = self.get_paths()
         self.data = self.load_data()
         self.focal = self.data['flx']
         self.pp = self.data['principle_point']
-        self.tfl_man = TFl_manager(self.focal,self.pp)
+        self.tfl_man = TFl_manager(self.focal, self.pp)
         self.run()
 
     def load_data(self):
@@ -29,14 +30,14 @@ class Controller:
         with open(self.pls_path, "r") as pls_file:
             paths_list = pls_file.readlines()
             for path in paths_list:
-                path =path.strip('\n')
+                path = path.strip('\n')
                 if path.endswith('pkl'):
-                    pkl =  'Controller/'+path
+                    pkl = 'Controller/' + path
                 elif path.endswith('png'):
-                    frame_list.append( 'Controller/'+path)
+                    frame_list.append('Controller/' + path)
                 else:
                     index = int(path)
-        return pkl, index,frame_list
+        return pkl, index, frame_list
 
     def calculate_EM(self, prev_frame_id, curr_frame_id):
         EM = np.eye(4)
@@ -47,17 +48,14 @@ class Controller:
         return EM
 
     def run(self):
-        self.tfl_man.run_all(self.frame_list[0],np.eye(4))
+        self.tfl_man.run_all(self.frame_list[0], np.eye(4))
 
         for frame in self.frame_list[1:]:
             prev_frame_id = int(frame.strip('_leftImg8bit.png')[-2:])
-            currentEm = self.calculate_EM(prev_frame_id - 1, prev_frame_id)
+            current_em = self.calculate_EM(prev_frame_id - 1, prev_frame_id)
 
-            path, red_candidates, green_candidates, red_TFLs, green_TFLs, current_frame= self.tfl_man.run_all(
-                frame,currentEm)
+            path, red_candidates, green_candidates, red_TFLs, green_TFLs, current_frame, rot_pts, foe = self.tfl_man.run_all(
+                frame, current_em)
+
             view = View()
-            view.view_plot(path, red_candidates, green_candidates, red_TFLs, green_TFLs,current_frame)
-
-
-
-
+            view.view_plot(path, red_candidates, green_candidates, red_TFLs, green_TFLs, current_frame, rot_pts, foe)

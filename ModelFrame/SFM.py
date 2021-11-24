@@ -5,11 +5,11 @@ import numpy as np
 
 def calc_TFL_dist(prev_container, curr_container, focal, pp):
     norm_prev_pts, norm_curr_pts, R, foe, tZ = prepare_3D_data(prev_container, curr_container, focal, pp)
-    if (abs(tZ) < 10e-6):
+    if abs(tZ) < 10e-6:
         print('tz = ', tZ)
-    elif (norm_prev_pts.size == 0):
+    elif norm_prev_pts.size == 0:
         print('no prev points')
-    elif (norm_prev_pts.size == 0):
+    elif norm_prev_pts.size == 0:
         print('no curr points')
     else:
         curr_container.corresponding_ind, curr_container.traffic_lights_3d_location, curr_container.valid = calc_3D_data(
@@ -96,3 +96,11 @@ def calc_dist(p_curr, p_rot, foe, tZ):
     y_dist = abs(p_curr[1] - p_rot[1])
     x_dist = abs(p_curr[0] - p_rot[0])
     return (Zx * x_dist + Zy * y_dist) / (y_dist + x_dist)
+
+
+def visualize(prev_container, curr_container, focal, pp):
+    norm_prev_pts, norm_curr_pts, R, norm_foe, tZ = prepare_3D_data(prev_container, curr_container, focal, pp)
+    norm_rot_pts = rotate(norm_prev_pts, R)
+    rot_pts = unnormalize(norm_rot_pts, focal, pp)
+    foe = np.squeeze(unnormalize(np.array([norm_foe]), focal, pp))
+    return rot_pts, foe

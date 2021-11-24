@@ -33,6 +33,8 @@ class Authentication_TFL:
         predicted_label = 1 if predictions > 0.5 else 0
         return predicted_label
 
+    # np.mean(predicted_label == val['labels']
+
     def __get_tfls(self, candidates):
         candidates_tfl = []
         for index, pixel in enumerate(candidates):
